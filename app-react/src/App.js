@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
-import Container from '@material-ui/core/Container'
+import 'bootstrap/dist/css/bootstrap.min.css'
 import NavBar from './components/NavBar'
-import Header from './components/Header'
 import PostEntry from './components/PostEntry'
 import PostEdit from './components/PostEdit'
 import UserLogin from './components/UserLogin'
@@ -26,19 +25,21 @@ class App extends Component{
       postEntries: [],
       postToEdit: {},
       modalOpen: false,
-      modalNewOpen: false,
+      modalOpenNew: false,
       activity: '',
       location: '',
       about: '',
       date: '',
+      loginShow: false,
       loggedIn: false,
+      registerShow: false,
       usersName: ''
     }
   }
 
   //Fetch to Backend
   getPosts = ()=>{
-    fetch(baseUrl + '/denver-local', {
+    fetch(baseUrl + '/posts', {
       credentials: "include"
     })
     .then(res => {
@@ -55,6 +56,7 @@ class App extends Component{
     })
   }
 
+  // Create new post
   addPost = (newPost) => {
     const copyPosts = [...this.state.postEntries]
     copyPosts.push(newPost)
@@ -75,7 +77,7 @@ class App extends Component{
 
   //Delete Post
   deletePost = async(id) =>{
-    const url = baseUrl + '/denver-local/' + id
+    const url = baseUrl + '/posts/' + id
 
     try{
       const response = await fetch(url, {method: "DELETE"})
@@ -95,7 +97,7 @@ class App extends Component{
   handleSubmit = async (event) =>{
     event.preventDefault()
 
-    const url = baseUrl + '/denver-local/' + this.state.postToEdit._id
+    const url = baseUrl + '/posts/' + this.state.postToEdit._id
     const response = await fetch(url, {
       method: 'PUT',
       body: JSON.stringify({
@@ -127,6 +129,7 @@ class App extends Component{
   showEditForm = (entry) => {
     this.setState({
       modalOpen: true,
+      modalOpenNew: false,
       activity: entry.activity,
       location: entry.location,
       about: entry.about,
@@ -139,7 +142,7 @@ class App extends Component{
   showNewForm = (entry) => {
     this.setState({
       modalOpen: false,
-      modalNewOpen: !this.state.modalNewOpen,
+      modalOpenNew: !this.state.modalOpenNew,
       activity: '',
       location: '',
       about: '',
@@ -149,13 +152,13 @@ class App extends Component{
 
   onClose = event => {
     this.setState({
-      modalNewOpen: false
+      modalOpenNew: false
     })
   }
 
   loggedInUser = async (event) => {
     event.preventDefault()
-    const url = baseUrl + '/login'
+    const url = baseUrl + '/account/login'
     let loginBody = {
       username: event.target.username.value ,
       password: event.target.password.value
@@ -174,6 +177,8 @@ class App extends Component{
         
         this.setState({
           loggedIn: true,
+          loginShow: false,
+          registerShow: false,
           usersName: event.target.username.value
         })
       }
@@ -186,10 +191,10 @@ class App extends Component{
   //Register
   register = async(event) => {
     event.preventDefault()
-    const url = baseUrl + '/register'
+    const url = baseUrl + '/account/register'
     
     if(event.target.password.value !== event.target.confirmPassword.value){
-      alert('Passwords Do Not Match')
+      alert('Passwords Do Not Match!')
     } else{
       try{
         const response = await fetch(url, {
@@ -221,7 +226,7 @@ class App extends Component{
 
   logOut = async (event) => {
     event.preventDefault()
-    const url = baseUrl + '/logout'
+    const url = baseUrl + '/account/logout'
 
     const response = await fetch(url, {
       method: 'DELETE',
@@ -248,19 +253,24 @@ class App extends Component{
     })
   }
 
+  showRegister = (entry) => {
+    this.setState({
+      loginShow: false,
+      registerShow: !this.state.registerShow
+    })
+  }
+
   render(){
     return(
       <div>
-        <Container maxWidth="lg">
-          <NavBar />
+
+        <NavBar />
 
 
 
 
 
 
-          <Footer />
-        </Container>
       </div>
     )
   }
