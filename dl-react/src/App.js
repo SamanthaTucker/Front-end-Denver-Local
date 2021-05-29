@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import Container from '@material-ui/core/Container'
-import './App.css'
 import NavBar from './components/NavBar'
 import Header from './components/Header'
 import PostEntry from './components/PostEntry'
@@ -8,6 +7,7 @@ import PostEdit from './components/PostEdit'
 import UserLogin from './components/UserLogin'
 import UserRegister from './components/UserRegister'
 import Footer from './components/Footer'
+import './App.css'
 
 console.log(process.env.NODE_ENV)
 let baseUrl = ''
@@ -251,10 +251,15 @@ class App extends Component{
   render(){
     return(
       <div>
-        <Container maxWidth="sm">
+        <Container maxWidth="lg">
+          <NavBar />
 
 
 
+
+
+
+          <Footer />
         </Container>
       </div>
     )
