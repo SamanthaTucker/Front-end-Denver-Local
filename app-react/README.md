@@ -1,70 +1,51 @@
-# Getting Started with Create React App
+# Front-end
+## Denver Local:
+An application based on local attractions and resturant recommendations made by Users. End Users should be able to create their own account, add blog like posts recommending Denver local resturants, attractions, activities, etc. I am taking my very first coding project and updating it into a Denver Local App.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+### User Stories:
 
-## Available Scripts
+* Users should be able to create their own account with a Username and Password.
+* Users should be able to log in and see a personal landing page with their posts.
+* Users should have the ability to like other posts from other users.
+* Users should be able to EDIT and DELETE their posts.
+* Users should be able to DELETE their account if they want.
+* Users should be able to see a map with a searchbar for local places like resturants, bars, activities, etc.
+* Users should be able to log out and have their posts saved to their accounts.
 
-In the project directory, you can run:
+### Stretch Goals:
+* Add an API showing resturants or bars rather than an entire Mapbox.
+* Users will have a personalized profile picture, or at least a personal username icon.
+* Users can comment on other posts while logged in.
+* Add a Weather widget to show the weather in their area while searching for activities.
+* I want to challenge myself and potentially make the form for a new post pop up on a modal.
+* Create a carosel of images on the Create Account landing page.
+* Add more than one API
 
-### `npm start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### API's
+A few different API's for potential use - 
+* https://docs.mapbox.com/api/overview/ MapBox
+* https://developer.ticketmaster.com/products-and-docs/apis/getting-started/?ref=apilist.fun For searching local events 
+* https://developer-tripadvisor.com/content-api/documentation/
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+### Routes:
+Route | URL | HTTP | Description
+------| ----| -----| -----------
+Index | /login | GET | User Sign in landing page
+New | /signup | POST | User creating an account with Username and Password
+Show | /home | GET | Once User is signed in/ created an account they will get a personal landing page. Users created posts will be shown here
+Create | /new | POST | Users will create a new post
+Edit | /edit/:id | PUT | Users can edit already created posts
+Destroy | /delete/:id | DELETE | Users can delete their posts
 
-### `npm test`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### WireFrame
 
-### `npm run build`
+**Create Account/ Signin Landing Page**
+![Image of Landing Page](https://i.imgur.com/Jz44tQk.png)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+**User Landing Page/ After signin**
+![Image of User Page](https://i.imgur.com/jvGUnog.png)
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+**Create Post form modal/page**
+![Image of Post Form](https://i.imgur.com/o5jivpf.png)
