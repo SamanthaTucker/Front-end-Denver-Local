@@ -1,11 +1,13 @@
 import React, { Component } from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import NavBar from './components/NavBar'
+import Body from './components/Body'
 import PostEntry from './components/PostEntry'
 import PostEdit from './components/PostEdit'
 import UserLogin from './components/UserLogin'
 import UserRegister from './components/UserRegister'
 import Footer from './components/Footer'
+
 import './App.css'
 
 console.log(process.env.NODE_ENV)
@@ -264,11 +266,13 @@ class App extends Component{
     return(
       <div>
 
-        <NavBar />
+        <NavBar loggedIn={this.state.loggedIn} loggedInUser={this.loggedInUser} logOut={this.logOut} register={this.register} loginShow={this.loginShow} loginShow={this.state.loginShow} showRegister={this.showRegister} registerShow={this.state.registerShow} usersName={this.state.usersName}/>
 
+        <Body />
 
+        <UserRegister />
 
-
+        <Footer />
 
 
       </div>

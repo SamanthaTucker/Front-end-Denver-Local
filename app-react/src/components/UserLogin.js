@@ -1,19 +1,22 @@
 import React, { Component } from 'react' 
+import Button from 'react-bootstrap/Button'
 
+export default function UserLogin(props) {
 
-export default class UserLogin extends Component {
-    constructor(props){
-        super(props)
-
-    }
-
-
-
-    render() {
         return(
             <div>
 
+                <form onSubmit={props.loggedInUser}>
+
+                    <label htmlFor='username'>Username: </label>
+                    <input className='input-field' type='text' id='username' name='username'></input>
+
+                    <label htmlFor='password'>Password: </label>
+                    <input className='input-field' type='password' id='password' name='password'></input>
+
+                    <Button variant="outline-secondary">Login</Button>
+                </form>
+
             </div>
         )
-    }
 }

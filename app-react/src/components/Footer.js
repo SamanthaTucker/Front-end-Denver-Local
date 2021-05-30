@@ -1,8 +1,6 @@
 import React, { Component } from 'react' 
-import UserLogin from './UserLogin'
-import UserRegister from './UserRegister'
+import Navbar from 'react-bootstrap/Navbar'
 
-import Button from 'react-bootstrap/Button'
 
 export default class Footer extends Component {
   constructor(props){
@@ -12,8 +10,12 @@ export default class Footer extends Component {
 
   render(){
     return(
-      <div className="mb-2">
-
+      <div>
+          <Navbar fixed="bottom" expand="lg" variant="light" bg="light">
+              <Navbar.Brand className='footer-link' href="#">LinkedIn</Navbar.Brand>
+              <Navbar.Brand className='footer-link' href="#">GitHub</Navbar.Brand>
+              <Navbar.Brand className='footer-link' href="#">Contact Me</Navbar.Brand>
+          </Navbar>
       </div>
     )
   }

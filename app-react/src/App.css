@@ -1,1 +1,15 @@
-
+#navBar{
+    background-color: rgb(0, 0, 71);
+}
+.container{
+    color: black;
+}
+.footer-link{
+    font-size: 18px;
+}
+.footer-link:hover{
+    font-size: 20px;
+}
+.register-form{
+    padding: 30px;
+}
