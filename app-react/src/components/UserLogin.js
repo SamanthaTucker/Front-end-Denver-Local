@@ -14,7 +14,7 @@ export default function UserLogin(props) {
                     <label htmlFor='password'>Password: </label>
                     <input className='input-field' type='password' id='password' name='password'></input>
 
-                    <Button variant="outline-secondary">Login</Button>
+                    <Button variant="outline-secondary" type='submit'>Login</Button>
                 </form>
 
             </div>

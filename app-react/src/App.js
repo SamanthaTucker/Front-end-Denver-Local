@@ -41,7 +41,7 @@ class App extends Component{
 
   //Fetch to Backend
   getPosts = ()=>{
-    fetch(baseUrl + '/posts', {
+    fetch(baseUrl + '/post', {
       credentials: "include"
     })
     .then(res => {
@@ -79,7 +79,7 @@ class App extends Component{
 
   //Delete Post
   deletePost = async(id) =>{
-    const url = baseUrl + '/posts/' + id
+    const url = baseUrl + '/post/' + id
 
     try{
       const response = await fetch(url, {method: "DELETE"})
@@ -99,7 +99,7 @@ class App extends Component{
   handleSubmit = async (event) =>{
     event.preventDefault()
 
-    const url = baseUrl + '/posts/' + this.state.postToEdit._id
+    const url = baseUrl + '/post/' + this.state.postToEdit._id
     const response = await fetch(url, {
       method: 'PUT',
       body: JSON.stringify({
@@ -160,7 +160,7 @@ class App extends Component{
 
   loggedInUser = async (event) => {
     event.preventDefault()
-    const url = baseUrl + '/account/login'
+    const url = baseUrl + '/user/login'
     let loginBody = {
       username: event.target.username.value ,
       password: event.target.password.value
@@ -193,7 +193,7 @@ class App extends Component{
   //Register
   register = async(event) => {
     event.preventDefault()
-    const url = baseUrl + '/account/register'
+    const url = baseUrl + '/user/register'
     
     if(event.target.password.value !== event.target.confirmPassword.value){
       alert('Passwords Do Not Match!')
@@ -228,7 +228,7 @@ class App extends Component{
 
   logOut = async (event) => {
     event.preventDefault()
-    const url = baseUrl + '/account/logout'
+    const url = baseUrl + '/user/logout'
 
     const response = await fetch(url, {
       method: 'DELETE',
@@ -263,6 +263,7 @@ class App extends Component{
   }
 
   render(){
+    console.log(this.state)
     return(
       <div>
 
@@ -271,6 +272,10 @@ class App extends Component{
         <Body />
 
         <UserRegister />
+
+        <UserLogin />
+
+        <PostEntry />
 
         <Footer />
 
