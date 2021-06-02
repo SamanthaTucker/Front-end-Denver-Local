@@ -7,6 +7,8 @@ import PostEdit from './components/PostEdit'
 import UserLogin from './components/UserLogin'
 import UserRegister from './components/UserRegister'
 import Footer from './components/Footer'
+import Button from 'react-bootstrap/Button'
+import Card from 'react-bootstrap/Card'
 
 import './App.css'
 
@@ -35,6 +37,7 @@ class App extends Component{
       loginShow: false,
       loggedIn: false,
       registerShow: false,
+      showBodyPage: true,
       usersName: ''
     }
   }
@@ -179,6 +182,7 @@ class App extends Component{
         
         this.setState({
           loggedIn: true,
+          showBodyPage: false,
           loginShow: false,
           registerShow: false,
           usersName: event.target.username.value
@@ -216,6 +220,7 @@ class App extends Component{
           this.loggedInUser(event)
 
           this.setState({
+            showLanding: false,
             loginShow: false,
             registerShow: false
           })
@@ -243,6 +248,7 @@ class App extends Component{
     if(response.status === 200) {
       this.setState({
         loggedIn: false,
+        showLanding: true,
         usersname: ''
       })
     }
@@ -269,13 +275,37 @@ class App extends Component{
 
         <NavBar loggedIn={this.state.loggedIn} loggedInUser={this.loggedInUser} logOut={this.logOut} register={this.register} loginShow={this.loginShow} loginShow={this.state.loginShow} showRegister={this.showRegister} registerShow={this.state.registerShow} usersName={this.state.usersName}/>
 
-        <Body />
+        {this.state.showBodyPage &&
+          <Body />
+        }
 
-        <UserRegister />
+          {this.state.loggedIn && 
+            <div className='loggedIn-div'>
+              <Button className='addPost-btn' variant="outline-secondary" type='submit'> Create Event Post</Button>
+                {this.state.modalOpenNew && 
+                  <PostEntry baseUrl={baseUrl} addPost={this.addPost} onClose={this.onClose} />
+                }
 
-        <UserLogin />
+                <div className='event-cards'>
+                  {this.state.postEntries.map(entry => {
+                    return(
+                      <Card style={{ width: '18rem' }} key={entry._id}>
+                      <Card.Img variant="top" src="holder.js/100px180" />
+                      <Card.Body>
+                        <Card.Title>{entry.activity}</Card.Title>
+                        <Card.Text>Location: {entry.location}</Card.Text>
+                        <Card.Text>About: {entry.about}</Card.Text>
+                        <Card.Text>{entry.date}</Card.Text>
+                        <Button variant="primary" className='edit-btn' onClick={()=>this.showEditForm(entry)}>Edit</Button>
+                        <Button variant="primary" className='delete-btn' onClick={()=>this.deletePost(entry._id)}>Delete</Button>
+                      </Card.Body>
+                    </Card>
+                    )
+                  })}
+                </div>
 
-        <PostEntry />
+            </div>
+          }
 
         <Footer />
 

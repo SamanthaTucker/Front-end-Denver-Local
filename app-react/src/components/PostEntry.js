@@ -28,7 +28,7 @@ export default class PostEntry extends Component {
     handleSubmit(event){
         event.preventDefault()
 
-        fetch(this.props.baseUrl + '/posts/new', {
+        fetch(this.props.baseUrl + '/post/new', {
             method: 'POST',
             body: JSON.stringify({
                 activity: this.state.activity,
