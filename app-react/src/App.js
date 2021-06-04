@@ -197,41 +197,41 @@ class App extends Component{
   // }
 
   //Register
-  register = async(event) => {
-    event.preventDefault()
-    const url = baseUrl + '/user/register'
-    const registerBody = {
-      username: this.state.username,
-      password: this.state.password
-    }
+  // register = async(event) => {
+  //   event.preventDefault()
+  //   const url = baseUrl + '/user/register'
+  //   const registerBody = {
+  //     username: this.state.username,
+  //     password: this.state.password
+  //   }
     
-    if(event.target.password.value !== event.target.confirmPassword.value){
-      alert('Passwords Do Not Match!')
-    } else{
-      try{
-        const response = await fetch(url, {
-          method: 'POST',
-          body: JSON.stringify(registerBody),
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        })
-        if(response.status === 401){
-          alert('User Already Exists!')
-        }else if(response.status === 201){
-          this.loggedInUser(event)
+  //   if(event.target.password.value !== event.target.confirmPassword.value){
+  //     alert('Passwords Do Not Match!')
+  //   } else{
+  //     try{
+  //       const response = await fetch(url, {
+  //         method: 'POST',
+  //         body: JSON.stringify(registerBody),
+  //         headers: {
+  //           'Content-Type': 'application/json'
+  //         }
+  //       })
+  //       if(response.status === 401){
+  //         alert('User Already Exists!')
+  //       }else if(response.status === 201){
+  //         this.loggedInUser(event)
 
-          this.setState({
-            showLanding: false,
-            loginShow: false,
-            registerShow: false
-          })
-        }
-      } catch(error){
-        console.log('Error: ', error)
-      }
-    }
-  }
+  //         this.setState({
+  //           showLanding: false,
+  //           loginShow: false,
+  //           registerShow: false
+  //         })
+  //       }
+  //     } catch(error){
+  //       console.log('Error: ', error)
+  //     }
+  //   }
+  // }
 
   logOut = async (event) => {
     event.preventDefault()
