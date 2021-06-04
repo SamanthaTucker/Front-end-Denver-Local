@@ -254,10 +254,10 @@ class App extends Component{
     }
   }
 
-  showLogin = (entry) =>{
+  showLogin = (entry) => {
     this.setState({
       loginShow: !this.state.loginShow,
-      registerShow: false
+      signupShow: false
     })
   }
 
@@ -273,7 +273,7 @@ class App extends Component{
     return(
       <div>
 
-        <NavBar loggedIn={this.state.loggedIn} loggedInUser={this.loggedInUser} logOut={this.logOut} register={this.register} loginShow={this.loginShow} loginShow={this.state.loginShow} showRegister={this.showRegister} registerShow={this.state.registerShow} usersName={this.state.usersName}/>
+        <NavBar loggedIn={this.state.loggedIn} loggedInUser={this.loggedInUser} logOut={this.logOut} register={this.register} showLogin={this.showLogin} loginShow={this.state.loginShow} showRegister={this.showRegister} registerShow={this.state.registerShow} usersName={this.state.usersName}/>
 
         {this.state.showBodyPage &&
           <Body />
@@ -315,3 +315,8 @@ class App extends Component{
   }
 }
 export default App 
+
+// api = GET /v3/users/me HTTP 1.1 Host: www.eventbriteapi.com Authorization: Bearer DJHZD52IIBIHAMRTWY6P
+
+// base url https://www.eventbriteapi.com/v3
+// https://www.eventbriteapi.com/v3/users/me/?token=DJHZD52IIBIHAMRTWY6P

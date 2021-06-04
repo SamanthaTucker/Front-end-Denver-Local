@@ -15,38 +15,76 @@ export default class NavBar extends Component {
     return(
       <div className='navBar-div'>
 
-			<Navbar id='navBar' sticky="top"  variant="dark">
+        <Nav
+          activeKey="/home"
+          onSelect={(selectedKey) => alert(`selected ${selectedKey}`)}
+        >
+          <Nav.Item>
+            <Nav.Link id='navbar-title' href="/home">Denver Local</Nav.Link>
+          </Nav.Item>
 
-				<Navbar.Brand id='navbar-title'>Denver Local</Navbar.Brand>	
-
-          <Nav>
-
+          <Nav.Item>
             <Nav.Link onClick={this.props.showLogin}>Login</Nav.Link>
+          </Nav.Item>
+          {this.props.loginShow &&
+              <UserLogin loggedInUser={this.props.loggedInUser}/>
+            }
 
-              {this.props.loginShow &&
-                <UserLogin loggedInUser={this.props.loggedInUser}/>
-              }
-
+          <Nav.Item>
             <Nav.Link onClick={this.props.showRegister}>Register</Nav.Link>
+          </Nav.Item>
+            {this.props.registerShow &&
+              <UserRegister register={this.props.register}/>
+            }
 
-              {this.props.registerShow &&
-                <UserRegister register={this.props.register}/>
-              }
+            {this.props.loggedIn &&
+              <Button onClick={this.props.logOut}>Log Out</Button>
+            }
 
-              {this.props.loggedIn &&
-                <Button onClick={this.props.logOut}>Log Out</Button>
-              }
+          <Nav.Item>
 
-            <Nav className='float-sm-right'>
+            <Nav.Link onClick={this.props.logOut}>Logout</Nav.Link>
 
-              <Navbar.Brand>{this.props.username}</Navbar.Brand>
+          </Nav.Item>
 
-            </Nav>
+          <Navbar.Brand>{this.props.username}</Navbar.Brand>
 
-          </Nav>
+        </Nav>
 
-			</ Navbar>
       </div>
     )
   }
 }
+
+
+{/* <Navbar id='navBar' sticky="top"  variant="dark">
+
+<Navbar.Brand id='navbar-title'>Denver Local</Navbar.Brand>	
+
+  <Nav>
+
+    <Nav.Link onClick={this.props.showLogin}>Login</Nav.Link>
+
+      {this.props.loginShow &&
+        <UserLogin loggedInUser={this.props.loggedInUser}/>
+      }
+
+    <Nav.Link onClick={this.props.showRegister}>Register</Nav.Link>
+
+      {this.props.registerShow &&
+        <UserRegister register={this.props.register}/>
+      }
+
+      {this.props.loggedIn &&
+        <Button onClick={this.props.logOut}>Log Out</Button>
+      }
+
+    <Nav className='float-sm-right'>
+
+      <Navbar.Brand>{this.props.username}</Navbar.Brand>
+
+    </Nav>
+
+  </Nav>
+
+</ Navbar> */}

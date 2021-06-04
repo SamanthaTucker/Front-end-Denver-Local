@@ -23,8 +23,7 @@ export default class Body extends Component {
             height='90%'
             />
             <Carousel.Caption>
-            <h3>Plan an Adventure In Colorado</h3>
-            <p>Find fun things to do in Colorado</p>
+            <h3>Find an Adventure In Colorado</h3>
             </Carousel.Caption>
         </Carousel.Item>
         <Carousel.Item>
