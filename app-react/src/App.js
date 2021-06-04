@@ -38,7 +38,9 @@ class App extends Component{
       loggedIn: false,
       registerShow: false,
       showBodyPage: true,
-      usersName: ''
+      usersName: '',
+      username: '',
+      password: ''
     }
   }
 
@@ -164,27 +166,30 @@ class App extends Component{
   loggedInUser = async (event) => {
     event.preventDefault()
     const url = baseUrl + '/user/login'
+    const loginBody = {
+      username: this.state.username,
+      password: this.state.password
+    }
     try{
       const response = await fetch(url, {
         method: 'POST',
-        body: JSON.stringify({
-          username: event.target.username.value ,
-          password: event.target.password.value
-        }),
         headers: {
           'Content-Type': 'application/json'
         },
+        body: JSON.stringify(loginBody),
         credentials: "include"
       })
+      console.log(response)
+      console.log("BODY: ",response.body)
       if(response.status === 200){
+        console.log('User is Authenticated!!!')
+        this.usersName(this.state.username)
         this.getPosts()
-        
         this.setState({
           loggedIn: true,
           showBodyPage: false,
           loginShow: false,
           registerShow: false,
-          usersName: event.target.username.value
         })
       }
     }
@@ -197,6 +202,10 @@ class App extends Component{
   register = async(event) => {
     event.preventDefault()
     const url = baseUrl + '/user/register'
+    const registerBody = {
+      username: this.state.username,
+      password: this.state.password
+    }
     
     if(event.target.password.value !== event.target.confirmPassword.value){
       alert('Passwords Do Not Match!')
@@ -204,11 +213,7 @@ class App extends Component{
       try{
         const response = await fetch(url, {
           method: 'POST',
-          body: JSON.stringify({
-            username: event.target.username.value,
-            password: event.target.password.value,
-            confirmPassword: event.target.confirmPassword.value
-          }),
+          body: JSON.stringify(registerBody),
           headers: {
             'Content-Type': 'application/json'
           }
