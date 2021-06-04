@@ -38,9 +38,7 @@ class App extends Component{
       loggedIn: false,
       registerShow: false,
       showBodyPage: true,
-      usersName: '',
-      username: '',
-      password: ''
+      usersName: ''
     }
   }
 
@@ -163,40 +161,40 @@ class App extends Component{
     })
   }
 
-  loggedInUser = async (event) => {
-    event.preventDefault()
-    const url = baseUrl + '/user/login'
-    const loginBody = {
-      username: this.state.username,
-      password: this.state.password
-    }
-    try{
-      const response = await fetch(url, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(loginBody),
-        credentials: "include"
-      })
-      console.log(response)
-      console.log("BODY: ",response.body)
-      if(response.status === 200){
-        console.log('User is Authenticated!!!')
-        this.usersName(this.state.username)
-        this.getPosts()
-        this.setState({
-          loggedIn: true,
-          showBodyPage: false,
-          loginShow: false,
-          registerShow: false,
-        })
-      }
-    }
-    catch(error){
-      console.log('Error => ', error)
-    }
-  }
+  // loggedInUser = async (event) => {
+  //   event.preventDefault()
+  //   const url = baseUrl + '/user/login'
+  //   const loginBody = {
+  //     username: this.state.username,
+  //     password: this.state.password
+  //   }
+  //   try{
+  //     const response = await fetch(url, {
+  //       method: 'POST',
+  //       headers: {
+  //         'Content-Type': 'application/json'
+  //       },
+  //       body: JSON.stringify(loginBody),
+  //       credentials: "include"
+  //     })
+  //     console.log(response)
+  //     console.log("BODY: ",response.body)
+  //     if(response.status === 200){
+  //       console.log('User is Authenticated!!!')
+  //       this.usersName(this.state.username)
+  //       this.getPosts()
+  //       this.setState({
+  //         loggedIn: true,
+  //         showBodyPage: false,
+  //         loginShow: false,
+  //         registerShow: false,
+  //       })
+  //     }
+  //   }
+  //   catch(error){
+  //     console.log('Error => ', error)
+  //   }
+  // }
 
   //Register
   register = async(event) => {

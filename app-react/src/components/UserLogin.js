@@ -1,5 +1,6 @@
 import React, { Component } from 'react' 
 import Button from 'react-bootstrap/Button'
+import Form from 'react-bootstrap/Form'
 
 console.log(process.env.NODE_ENV)
 let baseUrl = ''
@@ -59,21 +60,43 @@ class UserLogin extends Component {
     render() {
         console.log(this.state)
         return(
-            <div>
+            <div id='login-form'>
 
-                <form onSubmit={props.loggedInUser}>
+                <Form>
+                    <Form.Group controlId="username">
 
-                    <label htmlFor='username'>Username: </label>
-                    <input className='input-field' type='text' id='username' name='username'></input>
+                        <Form.Label>Username: </Form.Label>
+                        <Form.Control type="text" placeholder="Username" onChange={this.handleChange}/>
 
-                    <label htmlFor='password'>Password: </label>
-                    <input className='input-field' type='password' id='password' name='password'></input>
+                    </Form.Group>
 
-                    <Button variant="outline-secondary" type='submit'>Login</Button>
-                </form>
+                    <Form.Group controlId="password">
+
+                        <Form.Label>Password: </Form.Label>
+                        <Form.Control type="password" placeholder="Password" onChange={this.handleChange} />
+
+                    </Form.Group>
+
+                    <Button variant="primary" type="submit">Login</Button>
+                </Form>
 
             </div>
         )
     }
 }
 export default UserLogin
+
+{/* <div>
+
+<form onSubmit={this.loggingUser}>
+
+    <label htmlFor='username'>Username: </label>
+    <input className='input-field' type='text' id='username' name='username'></input>
+
+    <label htmlFor='password'>Password: </label>
+    <input className='input-field' type='password' id='password' name='password'></input>
+
+    <Button variant="outline-secondary" type='submit'>Login</Button>
+</form>
+
+</div> */}
