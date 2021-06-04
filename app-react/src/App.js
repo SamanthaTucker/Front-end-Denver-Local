@@ -164,14 +164,13 @@ class App extends Component{
   loggedInUser = async (event) => {
     event.preventDefault()
     const url = baseUrl + '/user/login'
-    let loginBody = {
-      username: event.target.username.value ,
-      password: event.target.password.value
-    }
     try{
       const response = await fetch(url, {
         method: 'POST',
-        body: JSON.stringify(loginBody),
+        body: JSON.stringify({
+          username: event.target.username.value ,
+          password: event.target.password.value
+        }),
         headers: {
           'Content-Type': 'application/json'
         },
