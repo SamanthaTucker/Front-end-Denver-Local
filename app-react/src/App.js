@@ -177,13 +177,97 @@ class App extends Component {
 
   userRegister = async(event) => {
     event.preventDefault()
-    
+    const url = baseUrl + '/user/register'
+    try{
+      const response = await fetch(url, {
+        method: 'POST',
+        body: JSON.stringify({
+          username: event.target.username.value,
+          password: event.target.password.value
+        }),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+      if(response.status === 400){
+        console.log('Username already taken!')
+      }
+      else if(response.status === 200){
+        this.userLogin(event)
+        this.setState({
+          landingPageShow: false,
+          loginFormShow: false,
+          registerFormShow: false
+        })
+      }
+    }
+    catch(error){
+      console.log('Error: ', error)
+    }
   }
 
+  logoutUser = async(event) => {
+    event.preventDefault()
+    fetch(baseUrl + '/user/logout', {
+      credentials: 'include'
+    })
+    .then(res => {
+      if(res.status === 200){
+        return res.json()
+      }
+      else{
+        return []
+      }
+    })
+    .then(data => {
+      this.setState({
+        loggedIn: false,
+        landingPageShow: true
+      })
+    })
+  }
+
+  showLoginForm = (entry) => {
+    this.setState({
+      loginFormShow: !this.state.loginFormShow,
+      registerFormShow: false
+    })
+  }
+
+  showRegisterForm = (entry) => {
+    this.setState({
+      loginFormShow: false,
+      registerFormShow: !this.state.registerFormShow
+    })
+  }
+
+  showNewForm = (entry) => {
+    this.setState({
+      newPostShow: true
+    })
+  }
 
   render(){
+    return(
+      <div>
+        {this.state.landingPageShow &&
+          <div>
+            <UserLogin userLogin={this.userLogin} />
+            <UserRegister userRegister={this.userRegister} />
+          </div>
+        }
 
+        {this.state.loggedIn && 
+          <div>
+            <Button onClick={this.showNewForm}>Create Post</Button>
+          </div>
+        }
 
+        {this.state.newPostShow && 
+          <PostEntry />
+        }
+      </div>
+    )
   }
 }
 
