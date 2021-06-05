@@ -1,90 +1,57 @@
 import React, { Component } from 'react' 
-import UserLogin from './UserLogin'
-import UserRegister from './UserRegister'
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom"
 
-import {Navbar, Nav} from 'react-bootstrap'
 import Button from 'react-bootstrap/Button'
 
-export default class NavBar extends Component {
-  constructor(props){
-    super(props)
-  }
+export default function NavBar(props){
 
-
-  render(){
     return(
+      <Router>
       <div className='navBar-div'>
+        <nav className='navbar'>
+          <ul>
 
-        <Nav
-          activeKey="/home"
-          onSelect={(selectedKey) => alert(`selected ${selectedKey}`)}
-        >
-          <Nav.Item>
-            <Nav.Link id='navbar-title' href="/home">Denver Local</Nav.Link>
-          </Nav.Item>
+            <li>
+              <Link to='/'>Denver Local</Link>
+            </li>
 
-          <Nav.Item>
-            <Nav.Link onClick={this.props.showLogin}>Login</Nav.Link>
-          </Nav.Item>
-          {this.props.loginShow &&
-              <UserLogin loggedInUser={this.props.loggedInUser}/>
-            }
+            <li>
+              <Link to='/blog'>Event Blogs</Link>
+            </li>
 
-          <Nav.Item>
-            <Nav.Link onClick={this.props.showRegister}>Register</Nav.Link>
-          </Nav.Item>
-            {this.props.registerShow &&
-              <UserRegister register={this.props.register}/>
-            }
+            <li>
+              <Link to='/blog/new'>Create a Blog Post</Link>
+            </li>
 
-            {this.props.loggedIn &&
-              <Button onClick={this.props.logOut}>Log Out</Button>
-            }
+            <li>
+              <Link to='/user/login'>
+                <Button>Log In</Button>
+              </Link>
+            </li>
 
-          <Nav.Item>
+            <li>
+              <Link to='/user/register'>
+                <Button>Register</Button>
+              </Link>
+            </li>
 
-            <Nav.Link onClick={this.props.logOut}>Logout</Nav.Link>
+            <li>
+              <Link to='/user/profile'>
+                <Button>Profile</Button>
+              </Link>
+            </li>
 
-          </Nav.Item>
+          </ul>
 
-          <Navbar.Brand>{this.props.username}</Navbar.Brand>
-
-        </Nav>
+        </nav>
 
       </div>
+      </Router>
     )
-  }
 }
 
-
-{/* <Navbar id='navBar' sticky="top"  variant="dark">
-
-<Navbar.Brand id='navbar-title'>Denver Local</Navbar.Brand>	
-
-  <Nav>
-
-    <Nav.Link onClick={this.props.showLogin}>Login</Nav.Link>
-
-      {this.props.loginShow &&
-        <UserLogin loggedInUser={this.props.loggedInUser}/>
-      }
-
-    <Nav.Link onClick={this.props.showRegister}>Register</Nav.Link>
-
-      {this.props.registerShow &&
-        <UserRegister register={this.props.register}/>
-      }
-
-      {this.props.loggedIn &&
-        <Button onClick={this.props.logOut}>Log Out</Button>
-      }
-
-    <Nav className='float-sm-right'>
-
-      <Navbar.Brand>{this.props.username}</Navbar.Brand>
-
-    </Nav>
-
-  </Nav>
-
-</ Navbar> */}
