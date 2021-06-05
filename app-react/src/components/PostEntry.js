@@ -34,7 +34,8 @@ export default class PostEntry extends Component {
                 activity: this.state.activity,
                 location: this.state.location,
                 about: this.state.about,
-                date: this.state.date
+                date: this.state.date,
+                modalOpenNew: this.state.modalOpenNew
             }),
             headers: {
                 'Content-Type': 'application/json'
@@ -75,7 +76,8 @@ export default class PostEntry extends Component {
                     <Button variant="outline-secondary" type='submit'> Create Post!</Button>
 
                 </form>
-
+                
+                <Button onClick={this.props.onClose}>Close</Button>
             </div>
         )
     }

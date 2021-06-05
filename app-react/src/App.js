@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import NavBar from './components/NavBar'
-import Body from './components/Body'
 import PostEntry from './components/PostEntry'
 import PostEdit from './components/PostEdit'
 import UserLogin from './components/UserLogin'
@@ -9,6 +8,7 @@ import UserRegister from './components/UserRegister'
 import Footer from './components/Footer'
 import Button from 'react-bootstrap/Button'
 import Card from 'react-bootstrap/Card'
+import Carousel from 'react-bootstrap/Carousel'
 
 import './App.css'
 
@@ -125,7 +125,8 @@ class App extends Component{
 
       this.setState({
         postEntries: copyPosts,
-        modalOpen: false
+        modalOpen: false,
+        modalOpenNew: false
       })
     }
   }
@@ -155,86 +156,90 @@ class App extends Component{
     })
   }
 
-  onClose = event => {
+  onClose = e => {
     this.setState({
       modalOpenNew: false
     })
   }
 
-  // loggedInUser = async (event) => {
-  //   event.preventDefault()
-  //   const url = baseUrl + '/user/login'
-  //   const loginBody = {
-  //     username: this.state.username,
-  //     password: this.state.password
-  //   }
-  //   try{
-  //     const response = await fetch(url, {
-  //       method: 'POST',
-  //       headers: {
-  //         'Content-Type': 'application/json'
-  //       },
-  //       body: JSON.stringify(loginBody),
-  //       credentials: "include"
-  //     })
-  //     console.log(response)
-  //     console.log("BODY: ",response.body)
-  //     if(response.status === 200){
-  //       console.log('User is Authenticated!!!')
-  //       this.usersName(this.state.username)
-  //       this.getPosts()
-  //       this.setState({
-  //         loggedIn: true,
-  //         showBodyPage: false,
-  //         loginShow: false,
-  //         registerShow: false,
-  //       })
-  //     }
-  //   }
-  //   catch(error){
-  //     console.log('Error => ', error)
-  //   }
-  // }
+  loggingUser = async(e) => {
+    e.preventDefault()
+    const url = baseUrl + '/user/login'
 
-  //Register
-  // register = async(event) => {
-  //   event.preventDefault()
-  //   const url = baseUrl + '/user/register'
-  //   const registerBody = {
-  //     username: this.state.username,
-  //     password: this.state.password
-  //   }
-    
-  //   if(event.target.password.value !== event.target.confirmPassword.value){
-  //     alert('Passwords Do Not Match!')
-  //   } else{
-  //     try{
-  //       const response = await fetch(url, {
-  //         method: 'POST',
-  //         body: JSON.stringify(registerBody),
-  //         headers: {
-  //           'Content-Type': 'application/json'
-  //         }
-  //       })
-  //       if(response.status === 401){
-  //         alert('User Already Exists!')
-  //       }else if(response.status === 201){
-  //         this.loggedInUser(event)
+    const loginBody = {
+        username: e.target.username.value,
+        password: e.target.password.value
+    }
+    try{
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(loginBody),
+            credentials: 'include'
+        })
+        if(response.status === 200){
+            console.log('User is authenticated!!')
+            this.getPosts()
+            this.setState({
+                loggedIn: true,
+                showBodyPage: false,
+                loginShow: false,
+                registerShow: false,
+                usersName: e.target.username.value
+              })
+        }
+    }catch(error){
+        console.log('Error => ', error)
+    }
+}
 
-  //         this.setState({
-  //           showLanding: false,
-  //           loginShow: false,
-  //           registerShow: false
-  //         })
-  //       }
-  //     } catch(error){
-  //       console.log('Error: ', error)
-  //     }
-  //   }
-  // }
+register = async (e) => {
+  e.preventDefault()
+  const url = baseUrl + '/user/register'
+  console.log('register function', e.target.password.value, e.target.confirmPassword.value)
 
-  logOut = async (event) => {
-    event.preventDefault()
+  if (e.target.password.value !== e.target.confirmPassword.value){
+    alert('passwords do not match')
+    } 
+  else {
+    try {
+      console.log('before request')
+      const response = await fetch(url, {
+        method: 'POST',
+        body: JSON.stringify({
+          username: e.target.username.value,
+          password: e.target.password.value,
+          confirmPassword: e.target.confirmPassword.value
+        }),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+      console.log('after request')
+      if (response.status === 401) {
+          console.log('user already exists')
+          alert("User Already Exists")
+      }
+     else if (response.status === 201) {
+        console.log('register hit')
+
+      this.loggingUser(e)
+      this.setState({
+        showLanding: false,
+        loginShow: false,
+        signupShow: false
+      })
+    } 
+  } catch(error) {
+    console.log(error)
+  }
+}
+}
+
+  logOut = async (e) => {
+    e.preventDefault()
     const url = baseUrl + '/user/logout'
 
     const response = await fetch(url, {
@@ -251,7 +256,7 @@ class App extends Component{
       this.setState({
         loggedIn: false,
         showLanding: true,
-        usersname: ''
+        usersName: ''
       })
     }
   }
@@ -259,7 +264,7 @@ class App extends Component{
   showLogin = (entry) => {
     this.setState({
       loginShow: !this.state.loginShow,
-      signupShow: false
+      registerShow: false
     })
   }
 
@@ -275,10 +280,62 @@ class App extends Component{
     return(
       <div>
 
-        <NavBar loggedIn={this.state.loggedIn} loggedInUser={this.loggedInUser} logOut={this.logOut} register={this.register} showLogin={this.showLogin} loginShow={this.state.loginShow} showRegister={this.showRegister} registerShow={this.state.registerShow} usersName={this.state.usersName}/>
+        <NavBar loggedIn={this.state.loggedIn} loggingUser={this.loggingUser} logOut={this.logOut} register={this.register} showLogin={this.showLogin} loginShow={this.state.loginShow} showRegister={this.showRegister} registerShow={this.state.registerShow} usersName={this.state.usersName}/>
 
         {this.state.showBodyPage &&
-          <Body />
+        <div className='body-div'>
+          <Carousel>
+          <Carousel.Item>
+              <img id='carousel-img'
+              className="d-block w-100"
+              src="https://images.unsplash.com/photo-1524429656589-6633a470097c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1050&q=80"
+              alt="First slide"
+              width='100%'
+              height='90%'
+              />
+              <Carousel.Caption>
+              <h3>Find an Adventure In Colorado</h3>
+              </Carousel.Caption>
+          </Carousel.Item>
+          <Carousel.Item>
+              <img id='carousel-img'
+              className="d-block w-100"
+              src="https://images.unsplash.com/photo-1586740070162-41777c99457f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1050&q=80"
+              alt="First slide"
+              width='100%'
+              height='90%'
+              />
+          </Carousel.Item>
+          <Carousel.Item>
+              <img id='carousel-img'
+              className="d-block w-100"
+              src="https://media.gettyimages.com/photos/the-overlook-view-at-garden-of-the-gods-picture-id600968276?k=6&m=600968276&s=612x612&w=0&h=yG7DDwe7JaoAgUg-y2lJ5_5xf9FiDn4fpLk0KxJ5wwg="
+              alt="Second slide"
+              width='100%'
+              height='90%'
+              />
+          </Carousel.Item>
+          <Carousel.Item>
+              <img id='carousel-img'
+              className="d-block w-100"
+              src="https://images.unsplash.com/photo-1512675628397-28288d1220ef?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1051&q=80"
+              alt="Third slide"
+              width='100%'
+              height='90%'
+              />
+          </Carousel.Item>
+          <Carousel.Item>
+              <img id='carousel-img'
+              className="d-block w-100"
+              src="https://media.gettyimages.com/photos/town-of-cripple-creek-picture-id586104402?k=6&m=586104402&s=612x612&w=0&h=Ob-COo66kDWS0fuoVJWNop9Re1BktbESj-Y-cAXX6Zo="
+              alt="Third slide"
+              width='100%'
+              height='90%'
+              />
+          </Carousel.Item>
+          </Carousel>
+
+      </div>
         }
 
           {this.state.loggedIn && 
@@ -290,16 +347,24 @@ class App extends Component{
 
                 <div className='event-cards'>
                   {this.state.postEntries.map(entry => {
+
                     return(
                       <Card style={{ width: '18rem' }} key={entry._id}>
                       <Card.Img variant="top" src="holder.js/100px180" />
                       <Card.Body>
+
                         <Card.Title>{entry.activity}</Card.Title>
+
                         <Card.Text>Location: {entry.location}</Card.Text>
+
                         <Card.Text>About: {entry.about}</Card.Text>
+
                         <Card.Text>{entry.date}</Card.Text>
+
                         <Button variant="primary" className='edit-btn' onClick={()=>this.showEditForm(entry)}>Edit</Button>
+
                         <Button variant="primary" className='delete-btn' onClick={()=>this.deletePost(entry._id)}>Delete</Button>
+
                       </Card.Body>
                     </Card>
                     )
@@ -309,6 +374,28 @@ class App extends Component{
             </div>
           }
 
+          {this.state.modalOpen && 
+            <div className='edit-form'>
+              <form onSubmit={this.handleSubmit}>
+
+                <label>Event: </label>
+                <input name='activity' value={this.state.activity} onChange={this.handleChange}></input>
+
+                <label>Location: </label>
+                <input name='location' value={this.state.location} onChange={this.handleChange}></input>
+
+                <label>About: </label>
+                <input name='about' value={this.state.about} onChange={this.handleChange}></input>
+
+                <label>Date: </label>
+                <input name='date' value={this.state.date} onChange={this.handleChange}></input>
+
+                <input type='submit' value='Submit Change'></input>
+              </form>
+
+            </div>
+          }
+  
         <Footer />
 
 
