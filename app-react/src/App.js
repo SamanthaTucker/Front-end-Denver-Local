@@ -32,6 +32,7 @@ class App extends Component {
       blogToEdit: {},
       editFormOpen: false,
       loginFormShow: false,
+      registerFormShow: false,
       landingPageShow: true,
       newPostShow: false
     }
@@ -92,11 +93,99 @@ class App extends Component {
     }
   }
 
+  handleChange = (event) =>{
+    this.setState({
+      [event.target.name]: [event.target.value]
+    })
+  }
+
+  deleteBlogPost = async (id) => {
+    const url = baseUrl + '/' + id
+    const response = await fetch(url, {
+      method: 'DELETE'
+    })
+    const index = this.state.blogPosts.findIndex(blog => blog.id === id)
+    const copyPosts = [...this.state.blogPosts]
+    copyPosts.splice(index, 1)
+
+    this.setState({
+      blogPosts: copyPosts
+    })
+  }
+
+  componentDidMount(){
+    this.getBlogPosts()
+  }
+
+  showEditForm = (entry) => {
+    this.setState({
+      editFormOpen: !this.state.editFormOpen,
+      activity: entry.activity,
+      location: entry.location,
+      about: entry.about,
+      date: entry.date,
+      blogToEdit: entry
+    })
+  }
+
+  onClose = e => {
+    this.setState({
+      editFormOpen: false,
+      newPostShow: false
+    })
+  }
+
+  userLogin = async(event) => {
+    event.preventDefault()
+    const url = baseUrl + '/user/login'
+    const loginBody = {
+      username: event.target.username.value,
+      password: event.target.username.value
+    }
+    try{
+      const response = await fetch(url, {
+        method: 'POST',
+        body: JSON.stringify(loginBody),
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        credentials: 'include'
+      })
+      .then(response => {
+        if(response.status === 200){
+          return response.json()
+        }
+        else{
+          return []
+        }
+      })
+      .then(data => {
+        this.setState({
+          loggedIn: true,
+          landingPageShow: false,
+          loginFormShow: false,
+          registerFormShow: false,
+          username: event.target.username
+        })
+      })
+      this.getBlogPosts()
+    }
+    catch(error){
+      console.log('Error: ', error)
+    }
+  }
+
+  userRegister = async(event) => {
+    event.preventDefault()
+    
+  }
+
+
   render(){
 
 
+  }
 }
-
 
 
 
