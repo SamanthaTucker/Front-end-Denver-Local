@@ -26,10 +26,73 @@ class App extends Component {
     super(props)
 
     this.state = {
-
+      blogPosts: [],
+      loggedIn: false,
+      username: '',
+      blogToEdit: {},
+      editFormOpen: false,
+      loginFormShow: false,
+      landingPageShow: true,
+      newPostShow: false
     }
   }
 
+  getBlogPosts = () => {
+    fetch(baseUrl + '/', {
+      credentials: 'include'
+    })
+    .then(res => {
+      if(res.status === 200 || res.status === 201){
+        return res.json()
+      }
+      else{
+        return []
+      }
+    })
+    .then(data => {
+      this.setState({
+        blogPosts: data.data
+      })
+    })
+  }
+
+  addBlogPost = (newPost) => {
+    const copyPosts = [...this.state.blogPosts]
+    copyPosts.push(newPost)
+    this.setState({
+      blogPosts: copyPosts
+    })
+    this.getBlogPosts()
+  }
+
+  handleSubmit = async (event) => {
+    event.preventDefault()
+    const url = baseUrl + '/' + this.state.blogToEdit.id 
+    const response = await fetch(url, {
+      method: 'PUT',
+      body: JSON.stringify({
+        activity: event.target.activity.value,
+        location: event.target.location.value, 
+        about: event.target.about.value, 
+        date: event.target.date.value
+      }),
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      credentials: 'include'
+    })
+    if(response.status === 200){
+      const updatedPost = await response.json()
+      const findIndex = this.state.blogPosts.findIndex(blog => blog.id === updatedPost.data.id)
+      const copyPosts = [...this.state.blogPosts]
+      copyPosts[findIndex] = updatedPost.data
+      this.setState({
+        blogPosts: copyPosts
+      })
+    }
+  }
+
+  render(){
 
 
 }
