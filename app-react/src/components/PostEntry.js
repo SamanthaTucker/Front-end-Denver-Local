@@ -6,8 +6,13 @@ export default class PostEntry extends Component{
     constructor(props){
         super(props)
         this.state = {
-
+            activity: '',
+            location: '',
+            about: '',
+            date: ''
         }
+        this.handleChange = this.handleChange.bind(this)
+        this.handleSubmit = this.handleSubmit.bind(this)
     }
 
     handleChange = (e) => {
@@ -18,7 +23,7 @@ export default class PostEntry extends Component{
 
     handleSubmit = (e) => {
         e.preventDefault()
-        fetch(this.props.baseUrl + '/', {
+        fetch(this.props.baseUrl + '/blog', {
             method: 'POST',
             body: JSON.stringify({
                 activity: this.state.activity,
@@ -48,9 +53,26 @@ export default class PostEntry extends Component{
     }
 
     render(){
+        console.log(this.state)
         return(
             <div>
-                
+                <form onSubmit={(event)=> this.hangleSubmit(event)}>
+
+                    <label htmlFor='activity'>Activity: </label>
+                    <input type='text' id='activity' name='activity' onChange={(event)=> this.handleChange(event)} value={this.state.activity}></input>
+
+                    <label htmlForm='location'>Location: </label>
+                    <input type='text' id='location' name='location' onChange={(event)=> this.handleChange(event)} value={this.state.location}></input>
+
+                    <label htmlForm='about'>About: </label>
+                    <input type='text' id='about' name='about' onChange={(event)=> this.handleChange(event)} value={this.state.about}></input>
+
+                    <label htmlFor='date'>Date: </label>
+                    <input type='text' id='date' name='date' onChange={(event)=> this.handleChange(event)} value={this.state.date}></input>
+
+                    <Button variant="outline-info" type='submit'>Create Post</Button>{' '}
+
+                </form>
             </div>
         )
     }
