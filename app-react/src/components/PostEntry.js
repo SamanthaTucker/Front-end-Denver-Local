@@ -33,15 +33,13 @@ export default class PostEntry extends Component{
             }),
             headers: {
                 'Content-Type': 'application/json'
-            },
-            credentials: 'include'
+            }
         })
         .then(res => {
             return res.json()
         })
         .then(data => {
-            this.props.addBlogPost(data.data)
-            this.props.onClose()
+            this.props.addBlogPost(data)
             this.setState({
                 activity: '',
                 location: '',
@@ -56,7 +54,7 @@ export default class PostEntry extends Component{
         console.log(this.state)
         return(
             <div>
-                <form onSubmit={(event)=> this.hangleSubmit(event)}>
+                <form onSubmit={(event)=> this.handleSubmit(event)}>
 
                     <label htmlFor='activity'>Activity: </label>
                     <input type='text' id='activity' name='activity' onChange={(event)=> this.handleChange(event)} value={this.state.activity}></input>
@@ -70,7 +68,7 @@ export default class PostEntry extends Component{
                     <label htmlFor='date'>Date: </label>
                     <input type='text' id='date' name='date' onChange={(event)=> this.handleChange(event)} value={this.state.date}></input>
 
-                    <Button variant="outline-info" type='submit'>Create Post</Button>{' '}
+                    <Button variant="outline-info" type='submit' id='submit' name='submit'>Submit</Button>{' '}
 
                 </form>
             </div>

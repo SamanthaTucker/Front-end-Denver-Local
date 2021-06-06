@@ -29,20 +29,11 @@ export default class App extends Component{
   }
 
   getBlogPosts = () => {
-    fetch(baseUrl + '/blog', {
-      // credentials: 'include'
-    })
-    .then(res => {
-      if(res.status === 200 || res.status === 201){
-        return res.json()
-      }
-      else{
-        return []
-      }
-    })
-    .then(data => {
+    fetch(baseUrl + '/blog').then(res => {
+      return res.json()
+    }).then(data => {
       this.setState({
-        blogPosts: data
+        blogPost: data
       })
     })
   }
@@ -91,151 +82,36 @@ export default class App extends Component{
 
   deleteBlogPost = async (id) => {
     const url = baseUrl + '/blog/' + id
-    const response = await fetch(url, {
-      method: 'DELETE'
-    })
-    const index = this.state.blogPosts.findIndex(blog => blog.id === id)
-    const copyPosts = [...this.state.blogPosts]
-    copyPosts.splice(index, 1)
+    try{
+      const response = await fetch(url, {method: "DELETE"})
+      if(response.status === 200){
+        const index = this.state.blogPosts.findIndex(blog => blog.id === id)
+        const copyPosts = [...this.state.blogPosts]
+        copyPosts.splice(index, 1)
+        this.setState({
+          blogPost: copyPosts
+        })
+      }
+    }
+    catch(error){
+      console.log('error: ', error)
+    }
+    // const response = await fetch(url, {
+    //   method: 'DELETE'
+    // })
+    // const index = this.state.blogPosts.findIndex(blog => blog.id === id)
+    // const copyPosts = [...this.state.blogPosts]
+    // copyPosts.splice(index, 1)
 
-    this.setState({
-      blogPosts: copyPosts
-    })
+    // this.setState({
+    //   blogPosts: copyPosts
+    // })
   }
 
   componentDidMount(){
     this.getBlogPosts()
   }
 
-  // showEditForm = (entry) => {
-  //   this.setState({
-  //     editFormOpen: !this.state.editFormOpen,
-  //     activity: entry.activity,
-  //     location: entry.location,
-  //     about: entry.about,
-  //     date: entry.date,
-  //     blogToEdit: entry
-  //   })
-  // }
-
-  // onClose = e => {
-  //   this.setState({
-  //     editFormOpen: false,
-  //     newPostShow: false
-  //   })
-  // }
-
-  userLogin = async(event) => {
-    event.preventDefault()
-    const url = baseUrl + '/user/login'
-    const loginBody = {
-      username: event.target.username.value,
-      password: event.target.username.value
-    }
-    try{
-      const response = await fetch(url, {
-        method: 'POST',
-        body: JSON.stringify(loginBody),
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        // credentials: 'include'
-      })
-      .then(response => {
-        if(response.status === 200){
-          return response.json()
-        }
-        else{
-          return []
-        }
-      })
-      .then(data => {
-        this.setState({
-          loggedIn: true,
-          landingPageShow: false,
-          loginFormShow: false,
-          registerFormShow: false,
-          username: event.target.username
-        })
-      })
-      this.getBlogPosts()
-    }
-    catch(error){
-      console.log('Error: ', error)
-    }
-  }
-
-  userRegister = async(event) => {
-    event.preventDefault()
-    const url = baseUrl + '/user/register'
-    try{
-      const response = await fetch(url, {
-        method: 'POST',
-        body: JSON.stringify({
-          username: event.target.username.value,
-          password: event.target.password.value
-        }),
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      })
-      if(response.status === 400){
-        console.log('Username already taken!')
-      }
-      else if(response.status === 200){
-        this.userLogin(event)
-        this.setState({
-          landingPageShow: false,
-          loginFormShow: false,
-          registerFormShow: false
-        })
-      }
-    }
-    catch(error){
-      console.log('Error: ', error)
-    }
-  }
-
-  logoutUser = async(event) => {
-    event.preventDefault()
-    fetch(baseUrl + '/user/logout', {
-      // credentials: 'include'
-    })
-    .then(res => {
-      if(res.status === 200){
-        return res.json()
-      }
-      else{
-        return []
-      }
-    })
-    .then(data => {
-      this.setState({
-        loggedIn: false,
-        landingPageShow: true
-      })
-    })
-  }
-
-  // showLoginForm = (entry) => {
-  //   this.setState({
-  //     loginFormShow: !this.state.loginFormShow,
-  //     registerFormShow: false
-  //   })
-  // }
-
-  // showRegisterForm = (entry) => {
-  //   this.setState({
-  //     loginFormShow: false,
-  //     registerFormShow: !this.state.registerFormShow
-  //   })
-  // }
-
-  // showNewForm = (entry) => {
-  //   this.setState({
-  //     newPostShow: true
-  //   })
-  // }
 
   render(){
     return(
@@ -267,3 +143,133 @@ export default class App extends Component{
 
 // base url https://www.eventbriteapi.com/v3
 // https://www.eventbriteapi.com/v3/users/me/?token=DJHZD52IIBIHAMRTWY6P
+
+  // showEditForm = (entry) => {
+  //   this.setState({
+  //     editFormOpen: !this.state.editFormOpen,
+  //     activity: entry.activity,
+  //     location: entry.location,
+  //     about: entry.about,
+  //     date: entry.date,
+  //     blogToEdit: entry
+  //   })
+  // }
+
+  // onClose = e => {
+  //   this.setState({
+  //     editFormOpen: false,
+  //     newPostShow: false
+  //   })
+  // }
+
+  // userLogin = async(event) => {
+  //   event.preventDefault()
+  //   const url = baseUrl + '/user/login'
+  //   const loginBody = {
+  //     username: event.target.username.value,
+  //     password: event.target.username.value
+  //   }
+  //   try{
+  //     const response = await fetch(url, {
+  //       method: 'POST',
+  //       body: JSON.stringify(loginBody),
+  //       headers: {
+  //         'Content-Type': 'application/json'
+  //       },
+  //       // credentials: 'include'
+  //     })
+  //     .then(response => {
+  //       if(response.status === 200){
+  //         return response.json()
+  //       }
+  //       else{
+  //         return []
+  //       }
+  //     })
+  //     .then(data => {
+  //       this.setState({
+  //         loggedIn: true,
+  //         landingPageShow: false,
+  //         loginFormShow: false,
+  //         registerFormShow: false,
+  //         username: event.target.username
+  //       })
+  //     })
+  //     this.getBlogPosts()
+  //   }
+  //   catch(error){
+  //     console.log('Error: ', error)
+  //   }
+  // }
+
+  // userRegister = async(event) => {
+  //   event.preventDefault()
+  //   const url = baseUrl + '/user/register'
+  //   try{
+  //     const response = await fetch(url, {
+  //       method: 'POST',
+  //       body: JSON.stringify({
+  //         username: event.target.username.value,
+  //         password: event.target.password.value
+  //       }),
+  //       headers: {
+  //         'Content-Type': 'application/json'
+  //       }
+  //     })
+  //     if(response.status === 400){
+  //       console.log('Username already taken!')
+  //     }
+  //     else if(response.status === 200){
+  //       this.userLogin(event)
+  //       this.setState({
+  //         landingPageShow: false,
+  //         loginFormShow: false,
+  //         registerFormShow: false
+  //       })
+  //     }
+  //   }
+  //   catch(error){
+  //     console.log('Error: ', error)
+  //   }
+  // }
+
+  // logoutUser = async(event) => {
+  //   event.preventDefault()
+  //   fetch(baseUrl + '/user/logout', {
+  //     // credentials: 'include'
+  //   })
+  //   .then(res => {
+  //     if(res.status === 200){
+  //       return res.json()
+  //     }
+  //     else{
+  //       return []
+  //     }
+  //   })
+  //   .then(data => {
+  //     this.setState({
+  //       loggedIn: false,
+  //       landingPageShow: true
+  //     })
+  //   })
+  // }
+
+  // showLoginForm = (entry) => {
+  //   this.setState({
+  //     loginFormShow: !this.state.loginFormShow,
+  //     registerFormShow: false
+  //   })
+  // }
+
+  // showRegisterForm = (entry) => {
+  //   this.setState({
+  //     loginFormShow: false,
+  //     registerFormShow: !this.state.registerFormShow
+  //   })
+  // }
+
+  // showNewForm = (entry) => {
+  //   this.setState({
+  //     newPostShow: true
+  //   })
+  // }
