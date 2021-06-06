@@ -1,31 +1,25 @@
-import React, { Component } from 'react' 
+import React from 'react' 
 import Button from 'react-bootstrap/Button'
-import Form from 'react-bootstrap/Form'
 
 
+export default function UserLogin(props){
 
+    return(
+        <div className='login-form'>
+            <h4>Login</h4>
+            <form onSubmit={props.UserLogin}>
+                <label>Username: </label>
+                <input type='text' id='username' name='username' placeholder='username123'></input>
 
-// export default function UserLogin (props) {
+                <label>Password: </label>
+                <input type='password' id='password' name='password' placeholder='password123'></input>
 
-//     return(
-//         <>
-//         <form onSubmit={props.loggingUser}>
+                <Button variant="outline-secondary" type='submit'>Log In</Button>{' '}
 
-//         <label htmlFor='username'>Username: </label>
-//         <input type='text' id='username' name='username'></input>
-
-//         <label htmlFor='password'>Password: </label>
-//         <input type='password' id='password' name='password'></input>
-
-//         <Button className='login-btn' variant='light' type='submit'>Login</Button>
-
-//         </form>
-//         </>
-//     )
-// }
-
-
-
+            </form>
+        </div>
+    )
+}
 
 
 

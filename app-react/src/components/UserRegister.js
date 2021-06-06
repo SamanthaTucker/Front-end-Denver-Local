@@ -1,29 +1,30 @@
 import React, { Component } from 'react' 
 import Button from 'react-bootstrap/Button'
-import Form from 'react-bootstrap/Form'
 
 
-// export default function UserRegister (props) {
 
-//     return(
-//         <div>
+export default function UserRegister(props){
 
-//         <form onSubmit={props.register}>
-//             <label htmlFor='username'>Username: </label>
-//             <input type='text' id='username' name='username'></input>
+    return(
+        <div className='register-form'>
+            <h4>Register Account</h4>
 
-//             <label htmlFor='password'>Password: </label>
-//             <input type='password' id='password' name='password'></input>
+            <form onSubmit={props.UserRegister}>
 
-//             <label htmlFor='confirmPassword'>Confirm Password: </label>
-//             <input type='password' id='confirmPassword' name='confirmPassword'></input>
+                <label>Username: </label>
+                <input type='text' id='username' name='username' placeholder='username123'></input>
 
-//             <Button className='register-btn' variant='light' type='submit' value='Register'>Create Account</Button>
-//         </form>
+                <label>Password: </label>
+                <input type='password' id='password' name='password' placeholder='password123'></input>
 
-//         </div>
-//     )
-// }
+                <Button variant="outline-secondary" type='submit'>Register Account</Button>{' '}
+
+            </form>
+        </div>
+    )
+}
+
+
 
 
 
