@@ -14,7 +14,7 @@ export default class NavBar extends Component {
         return(
             <>
                 <Navbar bg="dark" variant="dark">
-                    <Navbar.Brand href="#home">Denver Local</Navbar.Brand>
+                    <Navbar.Brand href="/">Denver Local</Navbar.Brand>
                     <Nav className="mr-auto">
                     <Nav.Link href="/user/register">Create Account</Nav.Link>
                     <Nav.Link href="/user/login">Login</Nav.Link>

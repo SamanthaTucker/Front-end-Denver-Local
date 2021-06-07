@@ -3,6 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import NavBar from './components/NavBar'
 import MainBody from './components/MainBody'
 import PostEntry from './components/PostEntry'
+import Footer from './components/Footer'
 import Button from 'react-bootstrap/Button'
 import Card from 'react-bootstrap/Card'
 
@@ -18,13 +19,13 @@ if(process.env.NODE_ENV === 'development'){
   baseUrl = 'heroku link here ---'
 }
 
+
 export default class App extends Component{
   constructor(props){
     super(props)
 
     this.state = {
       blogPosts: [],
-      blogToEdit: {},
     }
   }
 
@@ -121,6 +122,7 @@ export default class App extends Component{
         <PostEntry baseUrl={baseUrl} addBlogPost={this.addBlogPost} />
         {this.state.blogPosts.map(blog => {
           return(
+            <div className='card-div'>
             <Card key={blog.id} style={{ width: '18rem' }}>
               <Card.Body>
                 <Card.Title>{blog.activity}</Card.Title>
@@ -128,11 +130,16 @@ export default class App extends Component{
                 <Card.Text>
                   {blog.about}
                 </Card.Text>
-                <Card.Text>{blog.date}</Card.Text>
+                <Card.Subtitle className="mb-2 text-muted">{blog.date}</Card.Subtitle>
+                <Button className='edit-btn' variant="outline-info">Edit</Button>{' '}
+                <Button className='delete-btn' variant="outline-info" onClick={()=>this.deleteBlogPost(blog.id)}>Delete</Button>{' '}
               </Card.Body>
             </Card>
+            </div>
+
           )
         })}
+        <Footer />
       </div>
     )
   }

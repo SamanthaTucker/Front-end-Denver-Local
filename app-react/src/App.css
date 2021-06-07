@@ -1,15 +1,14 @@
-#navBar{
-    background-color: rgb(0, 0, 71);
-}
-.container{
-    color: black;
-}
-.footer-link{
-    font-size: 18px;
-}
-.footer-link:hover{
-    font-size: 20px;
-}
-.register-form{
+.postEntry-div{
     padding: 30px;
+    display: flex;
 }
+.postEntry-label{
+    color: #17a2b8;
+    padding: 10px;
+}
+.card-div{
+    padding: 30px;
+    display: flex;
+    flex-direction: row;
+}
+
