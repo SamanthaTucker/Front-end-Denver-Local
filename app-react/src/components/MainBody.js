@@ -15,7 +15,7 @@ export default class MainBody extends Component {
                 <Carousel.Item>
                     <img
                     className="d-block w-100"
-                    src="https://images.unsplash.com/photo-1524429656589-6633a470097c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1050&q=80"
+                    src="https://images.unsplash.com/photo-1620248742445-ce3a0de4b2b0?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1048&q=80"
                     alt="First slide"
                     />
                 </Carousel.Item>
@@ -29,14 +29,14 @@ export default class MainBody extends Component {
                 <Carousel.Item>
                     <img
                     className="d-block w-100"
-                    src="https://media.gettyimages.com/photos/the-overlook-view-at-garden-of-the-gods-picture-id600968276?k=6&m=600968276&s=612x612&w=0&h=yG7DDwe7JaoAgUg-y2lJ5_5xf9FiDn4fpLk0KxJ5wwg="
+                    src="https://images.unsplash.com/photo-1616474632177-aefa7a4fbb1f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
                     alt="Third slide"
                     />
                 </Carousel.Item>
                 <Carousel.Item>
                     <img id='carousel-img'
                     className="d-block w-100"
-                    src="https://images.unsplash.com/photo-1512675628397-28288d1220ef?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1051&q=80"
+                    src="https://c0.wallpaperflare.com/preview/634/741/263/breckenridge-brewery-16th-street-mall-downtown-denver-colorado-astronaut-paramount-cafe.jpg"
                     alt="Third slide"
                     width='100%'
                     height='90%'
@@ -45,7 +45,7 @@ export default class MainBody extends Component {
                <Carousel.Item>
                    <img id='carousel-img'
                     className="d-block w-100"
-                    src="https://media.gettyimages.com/photos/town-of-cripple-creek-picture-id586104402?k=6&m=586104402&s=612x612&w=0&h=Ob-COo66kDWS0fuoVJWNop9Re1BktbESj-Y-cAXX6Zo="
+                    src="https://images.unsplash.com/photo-1611851120517-0c7351a027c8?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80"
                     alt="Third slide"
                     width='100%'
                     height='90%'
@@ -64,8 +64,8 @@ export default class MainBody extends Component {
 
                 <Jumbotron fluid>
                     <Container>
-                        <h1>Discover Colorful Colorado</h1>
-                        <p>Create memories and post all about your unique adventures</p>
+                        <h1>Discover the Mile High City</h1>
+                        <p>Recommend a denver local resturant, bar, shop, anything you want!</p>
                     </Container>
                 </Jumbotron>
             </>   
